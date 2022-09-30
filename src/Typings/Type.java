@@ -3,6 +3,7 @@ package Typings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Type {
     String name;
@@ -18,10 +19,9 @@ public class Type {
         defending = new Effective();
     }
 
-    public void LoadType(String s){
-        Type t = new Type(s);
+    public void LoadType(Type t){
         ArrayList<String> arr = new ArrayList<>(STRTYPES);
-        switch (s) {
+        switch (t.name) {
             case "Fire" -> {
                 t.attacking.strong.addAll(Arrays.asList("Grass", "Ice", "Bug", "Steel"));
                 arr.removeAll(t.attacking.strong);
@@ -310,4 +310,38 @@ public class Type {
         }
     }
 
+    public void PrintType(){
+        System.out.println("\n" + this.name);
+        System.out.println("\tAttacking");
+        System.out.print("\t\tSuper effective against: ");
+        PrintList(attacking.strong);
+        System.out.print("\t\tNot very effective against: ");
+        PrintList(attacking.weak);
+        System.out.print("\t\tNeutral against: ");
+        PrintList(attacking.normal);
+        if(!attacking.immune.isEmpty()){
+            System.out.print("\t\tHas no effect on: ");
+            PrintList(attacking.immune);
+        }
+        System.out.println("\tDefending");
+        System.out.print("\t\tWeak to: ");
+        PrintList(defending.strong);
+        System.out.print("\t\tStrong to: ");
+        PrintList(defending.weak);
+        System.out.print("\t\tNeutral to: ");
+        PrintList(defending.normal);
+        if(!defending.immune.isEmpty()){
+            System.out.print("\t\tImmune to: ");
+            PrintList(defending.immune);
+        }
+    }
+
+    public void PrintList(List<String> list){
+        for(String s:list) {
+            if (list.indexOf(s)==(list.size()-1))
+                System.out.println(s + "\n");
+            else
+                System.out.print(s + ", ");
+        }
+    }
 }
