@@ -1,7 +1,13 @@
 package Typings;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class PokeType {
@@ -16,6 +22,36 @@ public class PokeType {
         this.name=name;
         attacking = new Effective();
         defending = new Effective();
+    }
+
+    public static void WriteTypeJson(boolean print){
+        HashMap<String, PokeType> listOfTypes = new HashMap<>();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        PokeType t;
+        for (String s: PokeType.STR_TYPES) {
+            t = new PokeType(s);
+            t.LoadType();
+            listOfTypes.put(s,t);
+        }
+
+        int success = JSON.CreateFile("Files\\Types.json", gson.toJson(listOfTypes));
+        if(print) {
+            if (success == 1)
+                System.out.println("File Created Successfully");
+            else if (success == 0)
+                System.out.println("File already exists");
+            else
+                System.out.println("Error occurred");
+        }
+    }
+
+    public static HashMap<String, PokeType> ReadJson(){
+        String s=JSON.ReadFile("Files\\Types.json");
+        if(s.length()==1)
+            return null;
+        Type type = new TypeToken<HashMap<String,PokeType>>(){}.getType();
+        return new Gson().fromJson(s, type);
+
     }
 
     public void LoadType(){
