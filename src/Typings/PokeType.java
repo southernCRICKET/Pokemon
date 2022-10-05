@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Type {
+public class PokeType {
     String name;
     Effective attacking;
     Effective defending;
@@ -12,7 +12,7 @@ public class Type {
             "Fairy", "Bug", "Dark", "Flying", "Normal",
             "Electric", "Poison", "Ground", "Rock", "Fighting", "Steel", "Psychic"));
 
-    public Type(String name){
+    public PokeType(String name){
         this.name=name;
         attacking = new Effective();
         defending = new Effective();
